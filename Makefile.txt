@@ -1,0 +1,14 @@
+LIBSNDFILE = /home/faculty/hsu/libsndfile-1.0.17
+
+sproc: sproc.o DelayEffect.o DelayLine.o
+	/bin/bash $(LIBSNDFILE)/libtool --mode=link g++  -g -O2 -W -Wall -pedantic -Wstrict-prototypes -Wmissing-prototypes -Waggregate-return -Wcast-align -Wcast-qual -Wshadow -pipe -o sproc  sproc.o DelayEffect.o DelayLine.o $(LIBSNDFILE)/src/libsndfile.la -lm
+
+sproc.o: sproc.cc
+	g++ -DHAVE_CONFIG_H -I. -I. -I$(LIBSNDFILE)/src -I./$(LIBSNDFILE)/src -g -O2 -W -Wall -pedantic -Wstrict-prototypes -Wmissing-prototypes -Waggregate-return -Wcast-align -Wcast-qual -Wshadow -pipe -c sproc.cc
+
+DelayEffect.o: DelayEffect.cc
+	g++ -DHAVE_CONFIG_H -I. -I. -I$(LIBSNDFILE)/src -I./../src -g -O2 -pipe -c DelayEffect.cc
+
+DelayLine.o: DelayLine.cc
+	g++ -DHAVE_CONFIG_H -I. -I. -I$(LIBSNDFILE)/src -I./../src -g -O2 -pipe -c DelayLine.cc
+
