@@ -1,0 +1,9 @@
+*.o
+*.wav
+Code/
+newmakefile
+*.aiff
+sine441
+sproc
+*.cpp
+

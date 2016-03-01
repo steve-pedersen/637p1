@@ -102,7 +102,9 @@ main (int argc, char *argv[])
     MakeSine sine(frequency, phase, duration);
 
 // calculate total number of samples, add 1 for ceiling    
-    sampleCount = ((int)SR * (duration / 1000)) + 1;   
+    sampleCount = ((int)SR * (duration / 1000)) + 1; 
+
+// generate sine wav values in buffer and write to file   
     while (currentTick < sampleCount)
     {   
         int writeCount = sampleCount - currentTick > BUFFER_LEN ? BUFFER_LEN : sampleCount - currentTick;
