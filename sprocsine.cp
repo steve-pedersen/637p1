@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <cstdlib>
 #include "sproc.h"
 #include "makesine.h"
 
@@ -39,7 +40,6 @@ main (int argc, char *argv[])
 {   /* This is a buffer of double precision floating point values
     ** which will hold our data while we process it.
     */
-    static double data [BUFFER_LEN] ;
     static double outbuf [BUFFER_LEN] ;
 
     /* A SNDFILE is very much like a FILE in the Standard C library. The

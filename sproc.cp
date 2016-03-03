@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <cstdlib>
 #include "sproc.h"
 #include "delayef.h"
 
@@ -95,7 +96,7 @@ main (int argc, char *argv[])
         } ;
     printf("Input soundfile header information:\n");
     printf("Sampling rate = %d\n",sfinfo.samplerate);
-    printf("Number of samples per channel = %lld\n",sfinfo.frames);
+    printf("Number of samples per channel = %ld\n",sfinfo.frames);
     printf("Number of channels = %d\n",sfinfo.channels);
     printf("Format hex bitmask = %x\n\n",sfinfo.format);
 
