@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include "sproc.h"
 #include "delayef.h"
+#include "echoef.h"
 
 using std::cin;
 using std::cout;
@@ -116,17 +117,19 @@ main (int argc, char *argv[])
     cout << " Dry gain = " << dryG << " Wet gain = " << wetG << " Feedback gain = " << feedbackG << endl;
     
 // construct delay effect with twice requested delay as max delay
-    DelayEffect delayEffect((int) (2 * delayInMs * SR / 1000.0));
-    delayEffect.setDelay(delayInMs * SR / 1000.0);
+    EchoEffect echoEffect((int) (2 * delayInMs * SR / 1000.0));
+    echoEffect.setDelay(delayInMs * SR / 1000.0);
     
-    delayEffect.setWetGain(wetG);
-    delayEffect.setDryGain(dryG);
-    delayEffect.setFeedbackGain(feedbackG);
+    echoEffect.setWetGain(wetG);
+    echoEffect.setDryGain(dryG);
+    echoEffect.setFeedbackGain(feedbackG);
+
+      
       
     while ((readcount = sf_read_double (infile, data, BUFFER_LEN)))
     {   
         for (int i=0; i<readcount; i++) {
-          outbuf[i] = delayEffect.tick(data[i]);
+          outbuf[i] = echoEffect.tick(data[i]);
         }
         sf_write_double (outfile, outbuf, readcount) ;
     } ;

@@ -1,9 +1,10 @@
-#ifndef DELAYEF_H
-#define DELAYEF_H
+#ifndef FLANGE_H
+#define FLANGE_H
 
-#include "delayl.h"
+#include "echoef.h"
+#include "makesine.h"
 
-class DelayEffect {
+class Flange : public EchoEffect {
  public:
   DelayEffect(int inDelay = 1024);
   ~DelayEffect();
