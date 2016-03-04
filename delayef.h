@@ -13,15 +13,12 @@ class DelayEffect {
   double getWetGain();
   void setDryGain(double);
   double getDryGain();
-  void setFeedbackGain(double);
-  double getFeedbackGain();
   double tick(double);
 
  private:
   DelayLine *delayBuf;
   double wetGain;
   double dryGain;
-  double feedbackGain;
 };
 
 #endif

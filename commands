@@ -1,14 +1,17 @@
 make -f Makefile.osx
 
-./sproc Data/emma_silence.wav Data/emmaecho2.wav 750 1 .75 .5
+./sproc Data/emma_silence.wav emmaecho2.wav 750 1 .75 .5
 
 ./sproc Data/click.wav clickecho.wav 100 1 .5 .5
 
 ./sproc Data/snap.wav Data/snapecho.wav 2000 1 .75 .5
 
 
-./sproc Data/snap.wav Data/snapecho.wav 500 1 .5 1
+./sproc Data/snap.wav snapecho.wav 500 1 .75 .5
+
+Usage: sproc [input soundfile] [output soundfile] [min delay (ms)] [delay rate (Hz)] [delay depth (ms)] [dry gain] [wet gain] [feedback gain]
 
 
+./sproc Data/emma16.wav chorus.wav 20 .25 20 1 1 0
 
-./sproc Data/emma16.wav Data/chorus.wav 
+./sproc Data/emma16.wav robot.wav 13 0 0 0 1 .75

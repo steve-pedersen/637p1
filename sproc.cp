@@ -21,6 +21,9 @@
 #include <cstdlib>
 #include "sproc.h"
 #include "delayef.h"
+#include "echoef.h"
+#include "flange.h"
+
 
 using std::cin;
 using std::cout;
@@ -57,8 +60,8 @@ main (int argc, char *argv[])
     int          readcount ;
     char         *infilename;
     char         *outfilename;
-    float delayInMs, /* delay in ms */
-      dryG, wetG, feedbackG;
+    float maxDelay, minDelay, /* delay in ms */
+    delayDepth, delayRate, dryG, wetG, feedbackG;
 
     /* Here's where we open the input file. We pass sf_open the file name and
     ** a pointer to an SF_INFO struct.
@@ -75,8 +78,8 @@ main (int argc, char *argv[])
   **    sfinfo.channels = 2 ;
     */
 
-    if (argc < 7) {
-      printf("Usage: sproc [input soundfile] [output soundfile] [delay in milliseconds] [dry gain] [wet gain] [feedback gain]\n");
+    if (argc < 9) {
+      printf("Usage: sproc [input soundfile] [output soundfile] [min delay (ms)] [delay rate (Hz)] [delay depth (ms)] [dry gain] [wet gain] [feedback gain]\n");
       return 1;
     }
 
@@ -109,25 +112,30 @@ main (int argc, char *argv[])
     else {
         printf("Opening output soundfile with identical header...\n\n");
     } 
-    delayInMs = atof(argv[3]);
-    dryG = atof(argv[4]);
-    wetG = atof(argv[5]);
-    feedbackG = atof(argv[6]);
-    cout << "Delay = " << delayInMs << "ms (" << delayInMs * SR / 1000.0 << " samples)";
+    minDelay = atof(argv[3]);
+    delayRate = atof(argv[4]);
+    delayDepth = atof(argv[5]);
+    maxDelay = minDelay + delayDepth;
+    dryG = atof(argv[6]);
+    wetG = atof(argv[7]);
+    feedbackG = atof(argv[8]);
+    cout << "Min Delay = " << minDelay << "ms" << " Rate = "<< delayRate<< " Depth = " << delayDepth;
     cout << " Dry gain = " << dryG << " Wet gain = " << wetG << " Feedback gain = " << feedbackG << endl;
     
 // construct delay effect with twice requested delay as max delay
-    DelayEffect delayEffect((int) (2 * delayInMs * SR / 1000.0));
-    delayEffect.setDelay(delayInMs * SR / 1000.0);
-    
-    delayEffect.setWetGain(wetG);
-    delayEffect.setDryGain(dryG);
-    delayEffect.setFeedbackGain(feedbackG);
+    FlangeEffect flangeEffect((int) (2 * maxDelay * SR / 1000.0));
+    flangeEffect.setDelay(maxDelay * SR / 1000.0);
+    flangeEffect.setMinDelay(minDelay);
+    flangeEffect.setWetGain(wetG);    
+    flangeEffect.setDryGain(dryG);
+    flangeEffect.setFeedbackGain(feedbackG);    
+    flangeEffect.setRate(delayRate);
+    flangeEffect.setDepth(delayDepth);
       
     while ((readcount = sf_read_double (infile, data, BUFFER_LEN)))
     {   
         for (int i=0; i<readcount; i++) {
-          outbuf[i] = delayEffect.tick(data[i]);
+          outbuf[i] = flangeEffect.tick(data[i]);
         }
         sf_write_double (outfile, outbuf, readcount) ;
     } ;

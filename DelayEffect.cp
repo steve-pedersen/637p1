@@ -44,20 +44,8 @@ double DelayEffect::getDryGain()
   return dryGain;
 }
 
-void DelayEffect::setFeedbackGain(double newGain)
-{
-  feedbackGain = newGain;
-}
-
-double DelayEffect::getFeedbackGain()
-{
-  return feedbackGain;
-}
-
 
 double DelayEffect::tick(double input)
 {
-  double temp = (*delayBuf).getCurrentOut() * feedbackGain;
-
-  return input * dryGain + (*delayBuf).tick(input + temp) * wetGain;
+  return input * dryGain + (*delayBuf).tick(input) * wetGain;
 }
