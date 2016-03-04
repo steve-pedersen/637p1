@@ -62,7 +62,7 @@ void FlangeEffect::setDepth(double newDepth)
 // returns a value >= 0
 double FlangeEffect::sineGenerator(){
   double sineWave = sin (delayRate*currTimeIndex/SR + PHASE);
-
+  printf("sine: %f\n", sineWave);
   // shifts the sine wave above x-axis
   return (sineWave + minDelay + delayDepth);
 }
@@ -72,6 +72,12 @@ double FlangeEffect::tick(double input)
   // combines dry and effects lines
   double delay = (*delayBuf).getCurrentOut() * feedbackGain;
   double output = input * dryGain + (*delayBuf).tick(input + delay) * wetGain;
+
+  if (output > 1.0)
+    output = 1.0;
+  else if (output < -1.0)
+    output = -1.0;
+
 
   // instantaneous delay time is set based on delay rate at current tick
   setDelay(sineGenerator());

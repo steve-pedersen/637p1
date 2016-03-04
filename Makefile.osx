@@ -3,8 +3,8 @@
 
 LIBSNDFILE = /Users/SP/CS/637/libsndfile-1.0.26
 
-sproc: sproc.o DelayEffect.o DelayLine.o EchoEffect.o
-	/bin/sh $(LIBSNDFILE)/libtool --mode=link g++ -g -O2 -W -Wstrict-prototypes -Wmissing-prototypes -Waggregate-return -Wcast-align -Wcast-qual -Wnested-externs -Wshadow -Wbad-function-cast -pipe -o sproc sproc.o DelayEffect.o DelayLine.o EchoEffect.o $(LIBSNDFILE)/src/libsndfile.la -lm
+sproc: sproc.o DelayEffect.o DelayLine.o EchoEffect.o FlangeEffect.o
+	/bin/sh $(LIBSNDFILE)/libtool --mode=link g++ -g -O2 -W -Wstrict-prototypes -Wmissing-prototypes -Waggregate-return -Wcast-align -Wcast-qual -Wnested-externs -Wshadow -Wbad-function-cast -pipe -o sproc sproc.o DelayEffect.o DelayLine.o EchoEffect.o FlangeEffect.o $(LIBSNDFILE)/src/libsndfile.la -lm
 
 #sprocsine: sprocsine.o MakeSine.o 
 #	/bin/sh $(LIBSNDFILE)/libtool --mode=link g++ -g -O2 -W -Wstrict-prototypes -Wmissing-prototypes -Waggregate-return -Wcast-align -Wcast-qual -Wnested-externs -Wshadow -Wbad-function-cast -pipe -o sprocsine sprocsine.o MakeSine.o $(LIBSNDFILE)/src/libsndfile.la -lm
@@ -26,3 +26,6 @@ EchoEffect.o: EchoEffect.cp
 
 MakeSine.o: MakeSine.cp
 	g++ -DHAVE_CONFIG_H -I. -I. -I$(LIBSNDFILE)/src -I./../src -fpascal-strings -I/Developer/Headers/FlatCarbon -g -O2 -pipe -c MakeSine.cp 
+
+FlangeEffect.o: FlangeEffect.cp
+	g++ -DHAVE_CONFIG_H -I. -I. -I$(LIBSNDFILE)/src -I./../src -fpascal-strings -I/Developer/Headers/FlatCarbon -g -O2 -pipe -c FlangeEffect.cp
