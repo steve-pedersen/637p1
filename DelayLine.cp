@@ -1,6 +1,6 @@
 #include <iostream>
 #include "delayl.h"
-
+#include <stdio.h>
 using std::cout;
 using std::endl;
 
@@ -47,8 +47,9 @@ double DelayLine::getCurrentOut()
 {
   double delayIndex;
   double output;
-
+  
   delayIndex = currIndex - currDelay;
+
   if (delayIndex < 0.0)
     delayIndex = delayIndex + ((double) maxDelay + 1.0);
     
@@ -75,6 +76,7 @@ double DelayLine::tick(double input)
   output = getCurrentOut();
 
   currIndex = (currIndex + 1) % (maxDelay + 1);
+
   return output;
   
 }

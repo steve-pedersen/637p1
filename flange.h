@@ -34,6 +34,7 @@ class FlangeEffect : public EchoEffect {
   double delayRate;
   double delayDepth;
   double minDelay;
+  double maxDelay;
 };
 
 #endif

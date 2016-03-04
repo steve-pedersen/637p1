@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <cstdlib>
 #include <math.h>
 #include "flange.h"
 
@@ -12,6 +14,7 @@ using std::endl;
 FlangeEffect::FlangeEffect(int inDelay)
 {
   delayBuf = new DelayLine(inDelay);
+  maxDelay = inDelay;
   currTimeIndex = 0;
 }
 
@@ -61,26 +64,26 @@ void FlangeEffect::setDepth(double newDepth)
 
 // returns a value >= 0
 double FlangeEffect::sineGenerator(){
-  double sineWave = sin (delayRate*currTimeIndex/SR + PHASE);
-  printf("sine: %f\n", sineWave);
-  // shifts the sine wave above x-axis
-  return (sineWave + minDelay + delayDepth);
+  // shifts the sine wave above x-axis & scales the amplitude
+  double sineWave = (sin (delayRate*currTimeIndex/SR + PHASE) + 1) * (delayDepth / 2);
+  double delay = sineWave + minDelay;
+  // printf("my delay: %f\n", delay);
+  return delay;
 }
 
 double FlangeEffect::tick(double input)
 {
   // combines dry and effects lines
-  double delay = (*delayBuf).getCurrentOut() * feedbackGain;
-  double output = input * dryGain + (*delayBuf).tick(input + delay) * wetGain;
+  double delay = input + (*delayBuf).getCurrentOut() * feedbackGain;
+  double output = input * dryGain + (*delayBuf).tick(delay) * wetGain;
 
   if (output > 1.0)
     output = 1.0;
   else if (output < -1.0)
     output = -1.0;
 
-
   // instantaneous delay time is set based on delay rate at current tick
-  setDelay(sineGenerator());
+  setDelay(sineGenerator() * SR / 1000.0);
   currTimeIndex++;
 
   return output;

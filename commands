@@ -12,6 +12,10 @@ make -f Makefile.osx
 Usage: sproc [input soundfile] [output soundfile] [min delay (ms)] [delay rate (Hz)] [delay depth (ms)] [dry gain] [wet gain] [feedback gain]
 
 
-./sproc Data/emma16.wav chorus.wav 20 .25 20 1 1 0
+./sproc Data/emma16.wav chorus.wav 20 .25 20 1 1 .5
+
+./sproc Egtr1.wav chorusgtr.wav 20 .25 20 1 1 .5
 
 ./sproc Data/emma16.wav robot.wav 13 0 0 0 1 .75
+
+./sproc Data/emma16.wav wacky.wav 40 2 40 0 1 .3

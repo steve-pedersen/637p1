@@ -121,7 +121,7 @@ main (int argc, char *argv[])
     feedbackG = atof(argv[8]);
     cout << "Min Delay = " << minDelay << "ms" << " Rate = "<< delayRate<< " Depth = " << delayDepth;
     cout << " Dry gain = " << dryG << " Wet gain = " << wetG << " Feedback gain = " << feedbackG << endl;
-    
+
 // construct delay effect with twice requested delay as max delay
     FlangeEffect flangeEffect((int) (2 * maxDelay * SR / 1000.0));
     flangeEffect.setDelay(maxDelay * SR / 1000.0);
