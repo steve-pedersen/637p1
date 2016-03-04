@@ -58,6 +58,6 @@ double EchoEffect::getFeedbackGain()
 double EchoEffect::tick(double input)
 {
   double temp = (*delayBuf).getCurrentOut() * feedbackGain;
-  double output = input * dryGain + (*delayBuf).tick(input + temp) * wetGain;
-  return output;
+
+  return input * dryGain + (*delayBuf).tick(input + temp) * wetGain;
 }

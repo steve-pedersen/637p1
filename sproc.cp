@@ -21,6 +21,8 @@
 #include "sproc.h"
 #include "delayef.h"
 #include "echoef.h"
+#include "flange.h"
+#include <math.h>
 
 using std::cin;
 using std::cout;
@@ -124,7 +126,7 @@ main (int argc, char *argv[])
     echoEffect.setDryGain(dryG);
     echoEffect.setFeedbackGain(feedbackG);
 
-      
+    printf("Phase = %f\n",phase);  
       
     while ((readcount = sf_read_double (infile, data, BUFFER_LEN)))
     {   
